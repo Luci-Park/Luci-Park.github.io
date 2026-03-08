@@ -3,14 +3,22 @@ import style from "./styles/footer.scss"
 import { version } from "../../package.json"
 import { i18n } from "../i18n"
 
+interface IconLink {
+  label: string
+  href: string
+  svg: string
+}
+
 interface Options {
   links: Record<string, string>
+  iconLinks?: IconLink[]
 }
 
 export default ((opts?: Options) => {
   const Footer: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) => {
     const year = new Date().getFullYear()
     const links = opts?.links ?? []
+    const iconLinks = opts?.iconLinks ?? []
     return (
       <footer class={`${displayClass ?? ""}`}>
         <p>
@@ -21,6 +29,11 @@ export default ((opts?: Options) => {
           {Object.entries(links).map(([text, link]) => (
             <li>
               <a href={link}>{text}</a>
+            </li>
+          ))}
+          {iconLinks.map(({ label, href, svg }) => (
+            <li>
+              <a href={href} aria-label={label} class="icon-link" dangerouslySetInnerHTML={{ __html: svg }} />
             </li>
           ))}
         </ul>

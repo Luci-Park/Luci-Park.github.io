@@ -1,6 +1,5 @@
 ---
-title: Welcome to Quartz
+title: About
 ---
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+Hi, I'm Sumin. Welcome to my park.
