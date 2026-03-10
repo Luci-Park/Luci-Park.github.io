@@ -11,6 +11,26 @@ body {
   background-size: 28px 28px;
 }
 
+// ─── Remove the 1500px max-width cap so the layout fills the full viewport ───
+// The default .page { max-width: 1500px; margin: 0 auto } leaves large blank
+// margins on anything wider than 1500px. Setting max-width: 100% lets the
+// grid (260px | auto | 260px) stretch edge-to-edge. A max-width on the article
+// itself keeps body text at a comfortable reading width.
+.page {
+  max-width: 100%;
+  margin: 0;
+}
+
+// Both the header block (title, breadcrumbs, meta) and the article body
+// get the same max-width so they stay vertically aligned.
+// Use #quartz-body to match the specificity of base.scss's margin rule and win.
+#quartz-body .center > .page-header,
+#quartz-body .center > article {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 // ─── Page title / site name ──────────────────────────────────────────────────
 .page-title {
   font-size: 1rem !important;
@@ -44,19 +64,19 @@ body {
 
 // ─── Left sidebar ────────────────────────────────────────────────────────────
 .sidebar.left {
-  padding: 5rem 1.25rem 2rem !important;
+  padding: 5rem 1.5rem 2rem 1.5rem !important;
   gap: 0.75rem !important;
   border-right: 1px solid var(--gray);
 
   @media all and ($tablet) {
-    padding: 5rem 1rem 2rem !important;
+    padding: 5rem 1.5rem 2rem 1.5rem !important;
     gap: 0.75rem !important;
   }
 
   @media all and ($mobile) {
     border-right: none;
     border-bottom: 1px solid var(--gray);
-    padding: 1rem 1.25rem 0.75rem !important;
+    padding: 0.75rem 1.25rem !important;
     gap: 0.6rem !important;
   }
 }
@@ -163,21 +183,21 @@ body {
 
 // ─── Right sidebar ────────────────────────────────────────────────────────────
 .sidebar.right {
-  padding: 5rem 1.25rem 2rem !important;
+  padding: 5rem 1.5rem 2rem 1.5rem !important;
   gap: 0.75rem !important;
   border-left: 1px solid var(--gray);
 
   @media all and ($tablet) {
     border-left: none;
     border-top: 1px solid var(--gray);
-    padding: 1rem !important;
+    padding: 0.75rem 1.25rem !important;
     gap: 0.75rem !important;
   }
 
   @media all and ($mobile) {
     border-left: none;
     border-top: 1px solid var(--gray);
-    padding: 1rem !important;
+    padding: 0.75rem 1rem !important;
     gap: 0.75rem !important;
   }
 }
