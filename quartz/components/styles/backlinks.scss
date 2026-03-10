@@ -1,23 +1,65 @@
 @use "../../styles/variables.scss" as *;
 
 .backlinks {
+  display: flex;
   flex-direction: column;
+  background-color: var(--lightgray);
+  border: 1px solid var(--gray);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+
+  // gradient top accent bar
+  &::before {
+    content: "";
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%);
+    flex-shrink: 0;
+  }
 
   & > h3 {
-    font-size: 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--secondary);
     margin: 0;
+    padding: 0.7rem 0.9rem 0.6rem;
+    opacity: 0.9;
   }
 
   & > ul.overflow {
     list-style: none;
-    padding: 0;
-    margin: 0.5rem 0;
+    padding: 0 0.6rem 0.6rem;
+    margin: 0;
     max-height: calc(100% - 2rem);
     overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 
     & > li {
       & > a {
-        background-color: transparent;
+        display: block;
+        background-color: color-mix(in srgb, var(--secondary) 6%, transparent) !important;
+        border: 1px solid color-mix(in srgb, var(--secondary) 15%, transparent);
+        border-radius: 6px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.82rem;
+        color: var(--darkgray) !important;
+        font-weight: 400;
+        transition:
+          background-color 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+        line-height: 1.4;
+
+        &:hover {
+          background-color: color-mix(in srgb, var(--secondary) 12%, transparent) !important;
+          border-color: color-mix(in srgb, var(--secondary) 35%, transparent);
+          color: var(--secondary) !important;
+        }
       }
     }
   }

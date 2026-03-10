@@ -1,3 +1,410 @@
 @use "./base.scss";
+@use "./variables.scss" as *;
 
-// put your custom CSS here!
+// ─── Dot-grid background (adapts via --gray which changes per mode) ───────────
+body {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--gray) 55%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+}
+
+// ─── Page title / site name ──────────────────────────────────────────────────
+.page-title {
+  font-size: 1rem !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dark) !important;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray);
+  width: 100%;
+
+  a {
+    background: none !important;
+    padding: 0 !important;
+    font-weight: 700;
+    color: var(--dark) !important;
+    letter-spacing: inherit;
+
+    &:hover {
+      color: var(--secondary) !important;
+    }
+  }
+
+  @media all and ($mobile) {
+    border-bottom: none;
+    padding-bottom: 0;
+    font-size: 1rem !important;
+    width: auto;
+  }
+}
+
+// ─── Left sidebar ────────────────────────────────────────────────────────────
+.sidebar.left {
+  padding: 5rem 1.25rem 2rem !important;
+  gap: 0.75rem !important;
+  border-right: 1px solid var(--gray);
+
+  @media all and ($tablet) {
+    padding: 5rem 1rem 2rem !important;
+    gap: 0.75rem !important;
+  }
+
+  @media all and ($mobile) {
+    border-right: none;
+    border-bottom: 1px solid var(--gray);
+    padding: 1rem 1.25rem 0.75rem !important;
+    gap: 0.6rem !important;
+  }
+}
+
+// Search + darkmode row inside left sidebar
+.sidebar.left .flex-component {
+  gap: 0.5rem;
+  width: 100%;
+}
+
+// ─── Search button ───────────────────────────────────────────────────────────
+.search {
+  flex: 1;
+
+  & > .search-button {
+    border-radius: 7px !important;
+    border: 1px solid var(--gray) !important;
+    background-color: color-mix(in srgb, var(--lightgray) 80%, transparent) !important;
+    height: 2.1rem !important;
+    width: 100%;
+    padding: 0 0.75rem 0 0 !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+
+    & > p {
+      font-size: 0.82rem !important;
+      opacity: 0.7;
+    }
+
+    &:hover {
+      border-color: var(--secondary) !important;
+      background-color: color-mix(in srgb, var(--secondary) 5%, var(--lightgray)) !important;
+    }
+  }
+
+  & > .search-container {
+    backdrop-filter: blur(8px);
+    background-color: color-mix(in srgb, var(--light) 70%, transparent);
+
+    & > .search-space > * {
+      box-shadow: 0 20px 60px color-mix(in srgb, var(--secondary) 8%, rgba(0,0,0,0.4));
+    }
+
+    & > .search-space > input {
+      border-radius: 10px 10px 0 0 !important;
+      border: 1px solid var(--gray) !important;
+      background-color: var(--lightgray) !important;
+      font-size: 1rem !important;
+    }
+
+    & .result-card {
+      background-color: transparent;
+
+      &:hover, &:focus, &.focus {
+        background-color: color-mix(in srgb, var(--secondary) 8%, transparent) !important;
+      }
+    }
+
+    & .highlight {
+      background: color-mix(in srgb, var(--tertiary) 30%, transparent) !important;
+    }
+  }
+}
+
+// ─── Darkmode toggle ─────────────────────────────────────────────────────────
+.darkmode {
+  flex-shrink: 0;
+  width: 2.1rem !important;
+  height: 2.1rem !important;
+  border-radius: 7px;
+  border: 1px solid var(--gray);
+  background-color: color-mix(in srgb, var(--lightgray) 80%, transparent);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  position: relative;
+
+  &:hover {
+    border-color: var(--secondary);
+    background-color: color-mix(in srgb, var(--secondary) 5%, var(--lightgray));
+  }
+
+  & svg {
+    position: absolute;
+    width: 14px !important;
+    height: 14px !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    fill: var(--darkgray);
+    transition: fill 0.2s ease;
+  }
+
+  &:hover svg {
+    fill: var(--secondary);
+  }
+}
+
+// ─── Explorer section label ───────────────────────────────────────────────────
+.explorer {
+  width: 100%;
+  padding-top: 0.25rem;
+}
+
+// ─── Right sidebar ────────────────────────────────────────────────────────────
+.sidebar.right {
+  padding: 5rem 1.25rem 2rem !important;
+  gap: 0.75rem !important;
+  border-left: 1px solid var(--gray);
+
+  @media all and ($tablet) {
+    border-left: none;
+    border-top: 1px solid var(--gray);
+    padding: 1rem !important;
+    gap: 0.75rem !important;
+  }
+
+  @media all and ($mobile) {
+    border-left: none;
+    border-top: 1px solid var(--gray);
+    padding: 1rem !important;
+    gap: 0.75rem !important;
+  }
+}
+
+// ─── Article headings ────────────────────────────────────────────────────────
+article h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--dark);
+  border-bottom: 1px solid var(--gray);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+article h2 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+  position: relative;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: linear-gradient(180deg, var(--secondary) 0%, var(--tertiary) 100%);
+    border-radius: 2px;
+    margin-right: 0.55rem;
+    vertical-align: middle;
+    transform: translateY(-0.08em);
+  }
+}
+
+article h3 {
+  font-weight: 600;
+  color: var(--darkgray);
+  font-size: 1.05rem;
+}
+
+// ─── Links ───────────────────────────────────────────────────────────────────
+a {
+  color: var(--secondary);
+  transition: color 0.15s ease, opacity 0.15s ease;
+
+  &:hover {
+    color: var(--tertiary);
+  }
+
+  &.internal {
+    background-color: color-mix(in srgb, var(--secondary) 10%, transparent) !important;
+    border-radius: 3px !important;
+    padding: 0.05rem 0.25rem !important;
+    color: var(--secondary);
+    font-weight: 500;
+    border-bottom: 1px solid color-mix(in srgb, var(--secondary) 30%, transparent);
+    text-decoration: none;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--secondary) 18%, transparent) !important;
+      color: var(--tertiary);
+    }
+  }
+}
+
+// ─── Blockquotes ─────────────────────────────────────────────────────────────
+blockquote {
+  border-left: 3px solid var(--secondary) !important;
+  background-color: color-mix(in srgb, var(--secondary) 4%, transparent);
+  border-radius: 0 6px 6px 0;
+  padding: 0.75rem 1.25rem !important;
+  color: var(--darkgray);
+  margin: 1.5rem 0 !important;
+  font-style: italic;
+
+  p { margin: 0; }
+}
+
+// ─── Code blocks ─────────────────────────────────────────────────────────────
+pre {
+  background-color: var(--lightgray) !important;
+  border: 1px solid var(--gray) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 0 !important;
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%);
+    border-radius: 8px 8px 0 0;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+  }
+}
+
+code {
+  background-color: var(--lightgray) !important;
+  color: var(--secondary) !important;
+  border: 1px solid var(--gray) !important;
+  border-radius: 4px !important;
+  padding: 0.1rem 0.35rem !important;
+  font-size: 0.85em !important;
+}
+
+pre > code {
+  background: none !important;
+  border: none !important;
+  color: var(--dark) !important;
+  padding: 0 !important;
+}
+
+// ─── Tables ──────────────────────────────────────────────────────────────────
+.table-container > table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background-color: var(--lightgray);
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--secondary) !important;
+}
+
+td {
+  border-bottom: 1px solid var(--gray);
+  color: var(--darkgray);
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr:hover td {
+  background-color: color-mix(in srgb, var(--secondary) 4%, transparent);
+}
+
+// ─── Tags ────────────────────────────────────────────────────────────────────
+a.tag-link {
+  background-color: color-mix(in srgb, var(--secondary) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--secondary) 30%, transparent) !important;
+  color: var(--secondary) !important;
+  border-radius: 999px !important;
+  padding: 0.1rem 0.6rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--secondary) 18%, transparent) !important;
+    color: var(--tertiary) !important;
+  }
+
+  &::before {
+    content: "#";
+    opacity: 0.6;
+  }
+}
+
+// ─── Breadcrumbs ─────────────────────────────────────────────────────────────
+.breadcrumb-container {
+  margin-top: 0.5rem !important;
+  gap: 0.25rem !important;
+
+  & .breadcrumb-element {
+    gap: 0.25rem;
+
+    & p {
+      font-size: 0.78rem;
+      color: var(--darkgray);
+      opacity: 0.7;
+      margin-left: 0 !important;
+    }
+
+    & a p {
+      color: var(--secondary);
+      opacity: 1;
+
+      &:hover {
+        color: var(--tertiary);
+      }
+    }
+  }
+}
+
+// ─── Content meta ────────────────────────────────────────────────────────────
+p.content-meta {
+  font-size: 0.78rem !important;
+  color: var(--gray) !important;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.25rem !important;
+}
+
+// ─── HR dividers ─────────────────────────────────────────────────────────────
+hr {
+  background: linear-gradient(90deg, transparent, var(--gray), transparent) !important;
+  height: 1px !important;
+}
+
+// ─── Images ──────────────────────────────────────────────────────────────────
+article img {
+  border-radius: 8px;
+  border: 1px solid var(--gray);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--dark) 10%, transparent);
+}
+
+// ─── Navigation progress bar ─────────────────────────────────────────────────
+.navigation-progress {
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%) !important;
+  height: 2px !important;
+}
+
+// ─── Selection ───────────────────────────────────────────────────────────────
+::selection {
+  background: color-mix(in srgb, var(--secondary) 28%, transparent) !important;
+  color: var(--dark) !important;
+}
+
+// ─── Text highlight ──────────────────────────────────────────────────────────
+.text-highlight {
+  background-color: var(--textHighlight) !important;
+  border-radius: 3px !important;
+}

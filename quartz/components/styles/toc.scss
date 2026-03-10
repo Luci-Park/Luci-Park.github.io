@@ -6,8 +6,23 @@
   overflow-y: hidden;
   min-height: 1.4rem;
   flex: 0 0.5 auto;
+  background-color: var(--lightgray);
+  border: 1px solid var(--gray);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+
+  // gradient top accent bar
+  &::before {
+    content: "";
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%);
+    flex-shrink: 0;
+  }
+
   &:has(button.toc-header.collapsed) {
-    flex: 0 1 1.4rem;
+    flex: 0 1 calc(2px + 0.7rem + 0.7rem + 1rem); // accent bar + heading + padding
   }
 }
 
@@ -16,21 +31,34 @@ button.toc-header {
   border: none;
   text-align: left;
   cursor: pointer;
-  padding: 0;
-  color: var(--dark);
+  padding: 0.7rem 0.9rem 0.6rem;
+  color: var(--secondary);
   display: flex;
   align-items: center;
+  width: 100%;
+  opacity: 0.9;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 
   & h3 {
-    font-size: 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     display: inline-block;
     margin: 0;
+    color: var(--secondary);
   }
 
   & .fold {
-    margin-left: 0.5rem;
+    margin-left: auto;
     transition: transform 0.3s ease;
-    opacity: 0.8;
+    opacity: 0.6;
+    width: 14px;
+    height: 14px;
   }
 
   &.collapsed .fold {
@@ -41,26 +69,43 @@ button.toc-header {
 ul.toc-content.overflow {
   list-style: none;
   position: relative;
-  margin: 0.5rem 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 0.6rem 0.6rem;
   max-height: calc(100% - 2rem);
   overscroll-behavior: contain;
-  list-style: none;
+  border-top: 1px solid var(--gray);
 
-  & > li > a {
-    color: var(--dark);
-    opacity: 0.35;
-    transition:
-      0.5s ease opacity,
-      0.3s ease color;
-    &.in-view {
-      opacity: 0.75;
+  & > li {
+    padding: 0.1rem 0;
+
+    & > a {
+      display: block;
+      color: var(--darkgray);
+      opacity: 0.55;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      transition:
+        0.2s ease opacity,
+        0.2s ease color,
+        0.2s ease background-color;
+
+      &:hover {
+        opacity: 0.85;
+      }
+
+      &.in-view {
+        opacity: 1;
+        color: var(--secondary);
+        background-color: color-mix(in srgb, var(--secondary) 8%, transparent);
+      }
     }
   }
 
   @for $i from 0 through 6 {
     & .depth-#{$i} {
-      padding-left: calc(1rem * #{$i});
+      padding-left: calc(0.75rem * #{$i});
     }
   }
 }

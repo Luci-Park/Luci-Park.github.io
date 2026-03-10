@@ -259,6 +259,17 @@ async function setupExplorer(currentSlug: FullSlug) {
       icon.addEventListener("click", toggleFolder)
       window.addCleanup(() => icon.removeEventListener("click", toggleFolder))
     }
+
+    // On mobile: close the overlay immediately when a file link is clicked,
+    // before waiting for the full SPA navigation cycle to complete.
+    const closeOnMobileNavClick = () => {
+      if (isMobileWidth()) collapseMobileExplorer(explorer)
+    }
+    const fileLinks = explorer.querySelectorAll<HTMLAnchorElement>(".explorer-ul a")
+    for (const link of fileLinks) {
+      link.addEventListener("click", closeOnMobileNavClick)
+      window.addCleanup(() => link.removeEventListener("click", closeOnMobileNavClick))
+    }
   }
 }
 
@@ -269,21 +280,25 @@ document.addEventListener("prenav", async () => {
   sessionStorage.setItem("explorerScrollTop", explorer.scrollTop.toString())
 })
 
+const isMobileWidth = () => window.matchMedia("(max-width: 800px)").matches
+
+function collapseMobileExplorer(explorer: Element) {
+  explorer.classList.add("collapsed")
+  explorer.setAttribute("aria-expanded", "false")
+  document.documentElement.classList.remove("mobile-no-scroll")
+}
+
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const currentSlug = e.detail.url
   await setupExplorer(currentSlug)
 
-  // if mobile hamburger is visible, collapse by default
+  // On mobile, always collapse the explorer after every navigation
   for (const explorer of document.getElementsByClassName("explorer")) {
     const mobileExplorer = explorer.querySelector(".mobile-explorer")
-    if (!mobileExplorer) return
+    if (!mobileExplorer) continue // was incorrectly `return` — don't break the whole loop
 
-    if (mobileExplorer.checkVisibility()) {
-      explorer.classList.add("collapsed")
-      explorer.setAttribute("aria-expanded", "false")
-
-      // Allow <html> to be scrollable when mobile explorer is collapsed
-      document.documentElement.classList.remove("mobile-no-scroll")
+    if (isMobileWidth()) {
+      collapseMobileExplorer(explorer)
     }
 
     mobileExplorer.classList.remove("hide-until-loaded")
