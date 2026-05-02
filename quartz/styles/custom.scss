@@ -428,3 +428,40 @@ article img {
   background-color: var(--textHighlight) !important;
   border-radius: 3px !important;
 }
+
+// ─── Figures and image rows ──────────────────────────────────────────────────
+article figure {
+  margin: 1.5rem 0;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--gray);
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--darkgray);
+    font-style: italic;
+  }
+}
+
+article .img-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin: 1.5rem 0;
+
+  figure {
+    flex: 1;
+    margin: 0;
+    min-width: 0;
+  }
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+}
